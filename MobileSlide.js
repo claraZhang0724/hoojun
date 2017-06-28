@@ -5,11 +5,11 @@ function MobileSlide(options) {
 	this.TouchStart = options.touchStart;//定义开始点击的回调
 	this.RenderEnd = options.renderEnd;//定义渲染结束的回调
 	this.onListClick = options.onListClick;//定义视图点击的回调
-	this.parent = this.el.parentNode;//定义父元素用于增加工具
-	this.viewWidth = this.parent.offsetWidth;//定义视图的可视宽度
 	this.beforeView = options.beforeView;
 	this.activeView = options.activeView;
 	this.afterView = options.afterView;
+	this.parent = this.el.parentNode;//定义父元素用于增加工具
+	this.viewWidth = this.parent.offsetWidth;//定义视图的可视宽度
     this.position = {//关于定位 起始位置，结束位置，触摸类型（上下左右）
         xStart: 0,
         yStart: 0,
@@ -60,6 +60,7 @@ MobileSlide.prototype = {
 		_this.index >= _this.max && (_this.index = 0);
 		_this.position.typeX = "left";
 		_this.isrender = true;
+		_this.autoPlayTimer && clearTimeout(_this.autoPlayTimer);
 		_this.renderBefore();
 		_this.autoPlayTimer = setTimeout(function () { 
 			_this.autoPlay(time);
@@ -83,6 +84,7 @@ MobileSlide.prototype = {
     	str.push('</ul>');
     	div.innerHTML = str.join("");
 		_this.parent.appendChild(div);
+		// document.querySelector('.ms-tools-box').addEventListener('click', this, {passive:true});
 		_this = null;
 		div = null;
 		str = null;
@@ -146,7 +148,7 @@ MobileSlide.prototype = {
 		_this.timer = setTimeout(function(){
     		_this.render();
     		_this = null;
-    	},200);
+    	},300);
 	},
 	//开始渲染
     render:function(){
