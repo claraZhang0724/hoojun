@@ -1,2 +1,2 @@
 # hoojun
-this is my first git test and for web server
+轮播图插件
